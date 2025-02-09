@@ -1,14 +1,14 @@
 Quarry Link [quarry_link]
-================
+===========
 
 By Gabriel [gabriel1379@gmail.com]
 
-This mod links the mod Quarry Mechanics with other mods, to make its mechanics usable with the resource nodes of those too.
+This mod links the mod Quarry Mechanics [ContentDB](https://content.luanti.org/packages/kestral/quarry/) [Source](https://github.com/kestral246/quarry) with other mods, to make its mechanics usable with the resource nodes of those too.
 
 Currently supported mods:
 -------------------------
-Everness
-Technic
+Everness [ContentDB](https://content.luanti.org/packages/SaKeL/everness/) [Source](https://bitbucket.org/minetest_gamers/everness/src/master/)  
+Technic [ContentDB](https://content.luanti.org/packages/RealBadAngel/technic/) [Source](https://github.com/minetest-mods/technic)  
 
 Currently supported features:
 -----------------------------
