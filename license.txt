@@ -1,0 +1,8 @@
+Quarry Link
+===========
+
+Licenses
+--------
+Source code
+
+> The MIT License (MIT)
