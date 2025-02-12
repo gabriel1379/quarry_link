@@ -32,7 +32,11 @@ function quarry_link.set_tools_for_stone(base_stone_name, in_mod)
     local base_stone_type = quarry_link.get_base_stone_type(base_stone_name)
     base_stone_type = string.gsub(base_stone_type, '_stone', '')
 
+    local cobble_name_without_stone = base_stone_type.."_cobble"
+    local cobble_name_with_stone = base_stone_type.."_stone_cobble"
+    local cobble_name = minetest.registered_nodes[in_mod..":"..cobble_name_without_stone] and cobble_name_without_stone or cobble_name_with_stone
+
     quarry.override_hammer(in_mod..":"..base_stone_type.."_stone", "quarry_link:cut_"..base_stone_type.."_stone", in_mod..":"..base_stone_type.."_cobble", {cracky = 3})
-    quarry.override_mortar(in_mod..":"..base_stone_type.."_cobble", in_mod..":"..base_stone_type.."_stone_brick", {crumbly = 3, stone = 1, falling_node = 1}, {sticky = 3})
-    quarry.override_pick(in_mod..":"..base_stone_type.."_stone_brick", in_mod..":"..base_stone_type.."_cobble", {cracky = 2})
+    quarry.override_mortar(in_mod..":"..cobble_name, in_mod..":"..base_stone_type.."_stone_brick", {crumbly = 3, stone = 1, falling_node = 1}, {sticky = 3})
+    quarry.override_pick(in_mod..":"..base_stone_type.."_stone_brick", in_mod..":"..cobble_name, {cracky = 2})
 end

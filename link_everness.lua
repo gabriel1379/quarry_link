@@ -10,16 +10,18 @@ local resource_nodes_everness = {
 quarry_link.override_resource_nodes(resource_nodes_everness)
 -- Resource nodes END
 
--- Cut Stone (m)
-quarry_link.register_cut_stone_or_block("Coral Desert Stone", "everness")
-quarry_link.register_cut_stone_or_block("Coral Desert Stone Block", "everness")
-quarry_link.set_tools_for_stone("Coral Desert Stone", "everness")
+local stones_with_block_variant_everness = {
+    "Coral Desert Stone",
+    "Crystal Stone",
+    "Mineral Stone",
+}
+for _,stone_name in pairs(stones_with_block_variant_everness) do
+    quarry_link.register_cut_stone_or_block(stone_name, "everness")
+    quarry_link.register_cut_stone_or_block(stone_name.." Block", "everness")
+    quarry_link.set_tools_for_stone(stone_name, "everness")
 
--- These stone nodes can no longer be crafted directly.
-for _,nodename in pairs({
-    "everness:coral_desert_stone",
-}) do
-minetest.clear_craft({output = nodename})
+    minetest.clear_craft({output = "everness:"..quarry_link.get_base_stone_type(stone_name)})
+    minetest.clear_craft({output = "everness:"..quarry_link.get_base_stone_type(stone_name).."_block"})
 end
 
 -- New craft recipes.
