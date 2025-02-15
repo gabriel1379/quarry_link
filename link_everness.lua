@@ -12,7 +12,6 @@ quarry_link.override_resource_nodes(resource_nodes_everness)
 
 local stones_with_block_variant_everness = {
     "Coral Desert Stone",
-    "Crystal Stone",
     "Mineral Stone",
 }
 for _,stone_name in pairs(stones_with_block_variant_everness) do
