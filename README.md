@@ -3,7 +3,7 @@ Quarry Link [quarry_link]
 
 By gabriel1379
 
-This mod links the mod Quarry Mechanics [ContentDB](https://content.luanti.org/packages/kestral/quarry/) [Source](https://github.com/kestral246/quarry) with other mods, to make its mechanics usable with the resource nodes of those too.
+This mod links the mod Quarry Mechanics [ContentDB](https://content.luanti.org/packages/kestral/quarry/) [Source](https://github.com/kestral246/quarry) with other mods, to make its mechanics usable with the stone-type and resource nodes of those too.
 
 Currently supported mods:
 -------------------------
@@ -12,4 +12,5 @@ Technic [ContentDB](https://content.luanti.org/packages/RealBadAngel/technic/) [
 
 Currently supported features:
 -----------------------------
-The resource nodes from the above mods will behave according to Quarry Mechanics (will turn to cobble and fall after being mined).
+- The resource nodes from the above mods will behave according to Quarry Mechanics (will turn to cobble and fall after being mined).
+- **Everness**: Coral Desert Stone and Mineral Stone can now be quarried/pickaxed/mortarred normally with **Quarry** tools, like the default stones.
