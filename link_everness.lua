@@ -18,21 +18,14 @@ for _,stone_name in pairs(stones_with_block_variant_everness) do
     quarry_link.register_cut_stone_or_block(stone_name, "everness")
     quarry_link.register_cut_stone_or_block(stone_name.." Block", "everness")
     quarry_link.set_tools_for_stone(stone_name, "everness")
+    quarry_link.set_tools_for_stair_and_slab(stone_name, "everness")
 
-    minetest.clear_craft({output = "everness:"..quarry_link.get_base_stone_type(stone_name)})
-    minetest.clear_craft({output = "everness:"..quarry_link.get_base_stone_type(stone_name).."_block"})
-end
+    local base_stone = quarry_link.snake_case(stone_name)
+    minetest.clear_craft({output = "everness:"..base_stone})
+    minetest.clear_craft({output = "everness:"..base_stone.."_block"})
+    minetest.clear_craft({output = "stairs:stair_"..base_stone})
+    minetest.clear_craft({output = "stairs:stair_inner_"..base_stone})
+    minetest.clear_craft({output = "stairs:stair_outer_"..base_stone})
 
--- New craft recipes.
--- For cut_stone_block nodes.
-for _,nodename in pairs(stones_with_block_variant_everness) do
-nodename = quarry_link.get_base_stone_type(nodename)
-minetest.register_craft({
-    output = nodename.."_block 9",
-    recipe = {
-            {nodename, nodename, nodename},
-            {nodename, nodename, nodename},
-            {nodename, nodename, nodename}
-    }
-})
+    quarry_link.register_block_craft_recipe(base_stone)
 end
