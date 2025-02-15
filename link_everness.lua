@@ -25,7 +25,8 @@ end
 
 -- New craft recipes.
 -- For cut_stone_block nodes.
-for _,nodename in pairs({"quarry_link:cut_coral_desert_stone"}) do
+for _,nodename in pairs(stones_with_block_variant_everness) do
+nodename = quarry_link.get_base_stone_type(nodename)
 minetest.register_craft({
     output = nodename.."_block 9",
     recipe = {
