@@ -122,6 +122,10 @@ function quarry_link.clear_crafts(stone_name, in_mod)
     local crafts_to_clear = {
         in_mod..":"..base_stone,
         in_mod..":"..base_stone.."_block",
+        in_mod..":"..base_stone.."_brick",
+        in_mod..":"..base_stone.."_bricks",
+        in_mod..":"..base_stone.."brick",
+        in_mod..":"..base_stone.."bricks",
         "stairs:stair_"..base_stone,
         "stairs:stair_inner_"..base_stone,
         "stairs:stair_outer_"..base_stone,
