@@ -14,3 +14,4 @@ Currently supported features:
 -----------------------------
 - The resource nodes from the above mods will behave according to Quarry Mechanics (will turn to cobble and fall after being mined).
 - **Everness**: Coral Desert Stone and Mineral Stone + their respective stairs and slabs can now be quarried/pickaxed/mortarred normally with **Quarry** tools, like their default variants.
+- **Technic**: Granite and Marble can now be quarried/pickaxed/mortarred normally with **Quarry** tools, like their default variants.
