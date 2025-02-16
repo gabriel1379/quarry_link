@@ -39,9 +39,9 @@ end
 
 for _,stone_name in pairs(stones_to_process) do
     quarry_link.register_cut_stone_or_block(stone_name, mod_name)
-    quarry_link.register_cut_stone_or_block(stone_name.." Block", mod_name)
+    -- quarry_link.register_cut_stone_or_block(stone_name.." Block", mod_name)
     quarry_link.set_tools_for_stone(stone_name, mod_name, true, true)
     -- quarry_link.set_tools_for_stair_and_slab(stone_name, mod_name, true)
     quarry_link.clear_crafts(stone_name, mod_name)
-    quarry_link.register_block_craft_recipe(stone_name)
+    -- quarry_link.register_block_craft_recipe(stone_name)
 end

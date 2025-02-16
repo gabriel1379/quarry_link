@@ -43,6 +43,7 @@ end
 function quarry_link.register_cobble(cobble_name)
     local base_cobble = quarry_link.snake_case(cobble_name)
     local is_marble = base_cobble == "marble"
+
     minetest.register_node( "quarry_link:"..base_cobble.."_cobble", {
     	description = cobble_name.." Cobble",
     	tiles = { "quarry_link_"..base_cobble.."_cobble.png" },
