@@ -100,6 +100,25 @@ function quarry_link.set_tools_for_stone(base_stone_name, in_mod, is_own_cobble,
     quarry.override_pick(in_mod..":"..base_stone.."_brick"..plural_s, cobble_mod..":"..cobble_name, {cracky = 2})
 end
 
+function quarry_link.register_cut_stone_or_block_stair_and_slab(stone_name, in_mod)
+    local base_stone = quarry_link.snake_case(stone_name)
+    local block_suffix = quarry_link.read_block_suffix(base_stone)
+    local crackiness = block_suffix == "" and 3 or 2
+
+    stairs.register_stair_and_slab(
+        "cut_"..base_stone,
+        "quarry_link:cut_"..base_stone,
+        {cracky = crackiness},
+        {in_mod.."_"..base_stone..".png^quarry_cut_stone"..block_suffix..".png"},
+        "Cut "..stone_name.." Stair",
+        "Cut "..stone_name.." Slab",
+        default.node_sound_stone_defaults(),
+        true
+    )
+
+    -- minetest.log("action", "Registered ".."Cut "..stone_name.." Stair and Slab.")
+end
+
 function quarry_link.set_tools_for_stair_and_slab(stone_name, in_mod, is_own_cobble)
     local base_stone = quarry_link.snake_case(stone_name)
     local cobble_mod = is_own_cobble and "quarry_link" or in_mod
@@ -107,18 +126,30 @@ function quarry_link.set_tools_for_stair_and_slab(stone_name, in_mod, is_own_cob
     -- minetest.log("action", "[Quarry_Link] base stone: "..base_stone)
     -- minetest.log("action", "[Quarry_Link] cobble name: "..cobble_name)
 
-    stairs.register_stair_and_slab("cut_"..base_stone,"quarry_link:cut_"..base_stone,{cracky = 3},{in_mod.."_"..base_stone..".png^quarry_cut_stone.png"},"Cut "..stone_name.." Stair","Cut "..stone_name.." Slab",default.node_sound_stone_defaults(),true)
-    stairs.register_stair_and_slab("cut_"..base_stone.."_block","quarry_link:cut_"..base_stone.."_block",{cracky = 2},{in_mod.."_"..base_stone.."_block.png^quarry_cut_stone_block.png"},"Cut "..base_stone.." Block Stair","Cut "..base_stone.." Block Slab",default.node_sound_stone_defaults(),true)
+    quarry_link.register_cut_stone_or_block_stair_and_slab(stone_name, in_mod)
+    quarry_link.register_cut_stone_or_block_stair_and_slab(stone_name.." Block", in_mod)
 
-    quarry.override_hammer("stairs:slab_"..base_stone, "stairs:slab_cut_"..base_stone, "stairs:slab_"..cobble_name, {cracky = 3})
-    quarry.override_hammer("stairs:stair_"..base_stone, "stairs:stair_cut_"..base_stone, "stairs:stair_"..cobble_name, {cracky = 3})
-    quarry.override_hammer("stairs:stair_inner_"..base_stone, "stairs:stair_inner_cut_"..base_stone, "stairs:stair_inner_"..cobble_name, {cracky = 3})
-    quarry.override_hammer("stairs:stair_outer_"..base_stone, "stairs:stair_outer_cut_"..base_stone, "stairs:stair_outer_"..cobble_name, {cracky = 3})
+    local stairs = {
+        "slab",
+        "stair",
+        "stair_inner",
+        "stair_outer",
+    }
 
-    quarry.override_mortar("stairs:slab_cut_"..base_stone, "stairs:slab_"..base_stone, {slab = 1, falling_node = 1, dig_immediate = 2}, {sticky = 2})
-    quarry.override_mortar("stairs:stair_cut_"..base_stone, "stairs:stair_"..base_stone, {stair = 1, falling_node = 1, dig_immediate = 2}, {sticky = 2})
-    quarry.override_mortar("stairs:stair_inner_cut_"..base_stone, "stairs:stair_inner_"..base_stone, {stair = 1, falling_node = 1, dig_immediate = 2}, {sticky = 2})
-    quarry.override_mortar("stairs:stair_outer_cut_"..base_stone, "stairs:stair_outer_"..base_stone, {stair = 1, falling_node = 1, dig_immediate = 2}, {sticky = 2})
+    for _,stair in ipairs(stairs) do
+        quarry.override_hammer(
+            "stairs:"..stair.."_"..base_stone,
+            "stairs:"..stair.."_cut_"..base_stone,
+            "stairs:"..stair.."_"..cobble_name,
+            {cracky = 3}
+        )
+        quarry.override_mortar(
+            "stairs:"..stair.."_cut_"..base_stone,
+            "stairs:"..stair.."_"..base_stone,
+            {stair = 1, falling_node = 1, dig_immediate = 2},
+            {sticky = 2}
+        )
+    end
 end
 
 function quarry_link.clear_crafts(stone_name, in_mod)
@@ -136,6 +167,8 @@ function quarry_link.clear_crafts(stone_name, in_mod)
     }
 
     for _, craft_to_clear in ipairs(crafts_to_clear) do
-        minetest.clear_craft({output = craft_to_clear})
+        if quarry_link.is_registered(craft_to_clear, in_mod) then
+            minetest.clear_craft({output = craft_to_clear})
+        end
     end
 end
