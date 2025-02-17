@@ -135,7 +135,7 @@ function quarry_link.clear_crafts(stone_name, in_mod)
         "stairs:stair_outer_"..base_stone,
     }
 
-    for _, craft_to_clear in pairs(crafts_to_clear) do
+    for _, craft_to_clear in ipairs(crafts_to_clear) do
         minetest.clear_craft({output = craft_to_clear})
     end
 end

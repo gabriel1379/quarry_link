@@ -17,14 +17,14 @@ minetest.override_item("quarry:stone_quarry_hammer", {
 -- Make Technic resource nodes work the same way
 -- as the default resource nodes.
 local resource_nodes_technic = {
-    mod_name..':mineral_chromium',
-    mod_name..':mineral_lead',
-    mod_name..':mineral_sulfur',
-    mod_name..':mineral_uranium',
-    mod_name..':mineral_zinc',
+    "mineral_chromium",
+    "mineral_lead",
+    "mineral_sulfur",
+    "mineral_uranium",
+    "mineral_zinc",
 }
-for _,resource_node_technic in pairs(resource_nodes_technic) do
-    quarry.override_with(resource_node_technic)
+for _,resource_node_technic in ipairs(resource_nodes_technic) do
+    quarry.override_with(mod_name..":"..resource_node_technic)
 end
 
 local stones_to_process = {
@@ -33,11 +33,11 @@ local stones_to_process = {
 }
 local missing_cobbles = stones_to_process
 
-for _,missing_cobble in pairs(missing_cobbles) do
+for _,missing_cobble in ipairs(missing_cobbles) do
     quarry_link.register_cobble(missing_cobble)
 end
 
-for _,stone_name in pairs(stones_to_process) do
+for _,stone_name in ipairs(stones_to_process) do
     quarry_link.register_cut_stone_or_block(stone_name, mod_name)
     -- quarry_link.register_cut_stone_or_block(stone_name.." Block", mod_name)
     quarry_link.set_tools_for_stone(stone_name, mod_name, true, true)
