@@ -1,7 +1,10 @@
-function quarry_link.override_resource_nodes(resource_nodes)
-    for _,resource_node in pairs(resource_nodes) do
-        quarry.override_with(resource_node)
-    end
+function quarry_link.override_resource_node(resource_node, cobble_name)
+    minetest.override_item(resource_node, {
+        after_dig_node = function(pos, oldnode, oldmetadata, digger)
+            minetest.set_node(pos, {name=cobble_name})
+            minetest.check_for_falling(pos)
+        end
+    })
 end
 
 function quarry_link.snake_case(this_string)
