@@ -14,6 +14,21 @@ function quarry_link.snake_case(this_string)
     return this_string
 end
 
+function quarry_link.firstToUpper(str)
+    return (str:gsub("^%l", string.upper))
+end
+
+function quarry_link.capitalize_firsts(this_string)
+    this_string = string.gsub(this_string, '_', ' ')
+    new_string = ''
+    for token in string.gmatch(this_string, "[^%s]+") do
+        token = quarry_link.firstToUpper(token)
+        new_string = new_string..' '..token
+    end
+
+    return string.gsub(new_string, ' ', '', 1)
+end
+
 function quarry_link.is_registered(node, in_mod)
     local is_registered = minetest.registered_nodes[in_mod..":"..node] and true or false
     -- minetest.log("action", "[Quarry_Link] "..in_mod..":"..node.." "..(is_registered and "is registered." or "is not registered."))
@@ -90,6 +105,8 @@ function quarry_link.set_tools_for_stone(base_stone_name, in_mod, is_own_cobble,
     -- minetest.log("action", "[Quarry_Link] ".."Using name "..cobble_name.." to set cobble for stone "..in_mod..":"..base_stone_name..".")
 
     if (not cobble_name) then
+        minetest.log("action", "[Quarry Link] Cannot register "..cobble_mod..":"..base_stone.." as cobble name could not be determined.")
+
         return false
     end
 
@@ -119,7 +136,7 @@ function quarry_link.register_cut_stone_or_block_stair_and_slab(stone_name, in_m
     -- minetest.log("action", "Registered ".."Cut "..stone_name.." Stair and Slab.")
 end
 
-function quarry_link.set_tools_for_stair_and_slab(stone_name, in_mod, is_own_cobble)
+function quarry_link.set_tools_for_stair_and_slab(stone_name, in_mod, is_own_cobble, conversions_by_tool)
     local base_stone = quarry_link.snake_case(stone_name)
     local cobble_mod = is_own_cobble and "quarry_link" or in_mod
     local cobble_name = quarry_link.determine_cobble_name(base_stone, cobble_mod)
@@ -137,6 +154,7 @@ function quarry_link.set_tools_for_stair_and_slab(stone_name, in_mod, is_own_cob
     }
 
     for _,stair in ipairs(stairs) do
+        -- minetest.log("action", "[Quarry Link]Overriding for stairs, using 'stairs:"..stair.."_"..base_stone.."', 'stairs:"..stair.."_cut_"..base_stone.."' and 'stairs:"..stair.."_"..cobble_name.."'")
         quarry.override_hammer(
             "stairs:"..stair.."_"..base_stone,
             "stairs:"..stair.."_cut_"..base_stone,
@@ -148,6 +166,11 @@ function quarry_link.set_tools_for_stair_and_slab(stone_name, in_mod, is_own_cob
             "stairs:"..stair.."_"..base_stone,
             {stair = 1, falling_node = 1, dig_immediate = 2},
             {sticky = 2}
+        )
+        quarry.override_pick(
+            "stairs:"..stair..base_stone,
+            "stairs:"..stair..cobble_name,
+            {cracky = 2}
         )
     end
 end
@@ -172,3 +195,24 @@ function quarry_link.clear_crafts(stone_name, in_mod)
         end
     end
 end
+
+function quarry_link.register_rubble(stone_name, in_mod)
+    local base_stone = quarry_link.snake_case(stone_name)
+    minetest.register_node("quarry_link:"..base_stone.."_rubble", {
+        description = stone_name.." Rubble",
+        tiles = {in_mod.."_"..base_stone..".png^quarry_rubble_overlay.png"},
+        is_ground_content = false,
+        groups = {crumbly = 3, stone = 2, falling_node = 1},
+        sounds = default.node_sound_stone_defaults(),
+        on_dig = quarry.mortar_on_dig(in_mod.."_"..base_stone.."_brick", {sticky = 3}),
+    })
+end
+
+function quarry_link.table_flip(t)
+    local s={}
+    for k,v in pairs(t) do
+        s[v]=k
+    end
+    return s
+end
+     
