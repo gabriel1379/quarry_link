@@ -164,10 +164,10 @@ for tool, conversions in pairs(conversions_by_tool) do
 
             local bad_result = "cobble"
             local is_sandstone_or_quartz = not (string.find(target, "sandstone") == nil) or not (string.find(target, "quartz") == nil)
-            -- minetest.log("action", "[Quarry Link] target: "..target)
+            minetest.log("action", "[Quarry Link] target: "..target)
             if is_sandstone_or_quartz then
                 bad_result = "rubble"
-                -- minetest.log("action", "[Quarry Link] Attempting to register rubble variant for "..name..", with technical name: "..target.."_rubble")
+                minetest.log("action", "[Quarry Link] Attempting to register rubble variant for "..name..", with technical name: "..target.."_rubble")
                 quarry_link.register_rubble(name, "quarry_link")
             end
 
@@ -179,7 +179,7 @@ for tool, conversions in pairs(conversions_by_tool) do
             quarry.override_hammer(mod_name..":"..target, "quarry_link:cut_"..target, mod_name..":"..bad_result, {cracky = 3})
 
             -- minetest.log("action", "[Quarry Link] Attempting to register stairs and slab for "..mod_name..":"..target)
-            quarry_link.register_cut_stone_or_block_stair_and_slab(target, "quarry_link")
+            quarry_link.register_cut_stone_or_block_stair_and_slab(name, "quarry_link")
 
             for _, stair in ipairs(stairs) do
                 if (quarry_link.is_registered(stair.."_"..target, "stairs")) and (quarry_link.is_registered(stair.."_cut_"..target, "stairs")) then
