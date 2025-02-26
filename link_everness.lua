@@ -164,10 +164,10 @@ for tool, conversions in pairs(conversions_by_tool) do
 
             local bad_result = "cobble"
             local is_sandstone_or_quartz = not (string.find(target, "sandstone") == nil) or not (string.find(target, "quartz") == nil)
-            minetest.log("action", "[Quarry Link] target: "..target)
+            -- minetest.log("action", "[Quarry Link] target: "..target)
             if is_sandstone_or_quartz then
                 bad_result = "rubble"
-                minetest.log("action", "[Quarry Link] Attempting to register rubble variant for "..name..", with technical name: "..target.."_rubble")
+                -- minetest.log("action", "[Quarry Link] Attempting to register rubble variant for "..name..", with technical name: "..target.."_rubble")
                 quarry_link.register_rubble(name, "quarry_link")
             end
 
@@ -237,7 +237,7 @@ for tool, conversions in pairs(conversions_by_tool) do
             local is_ok = true
             if not quarry_link.is_registered(target, mod_name) then
                 is_ok = false
-                minetest.log("action", "[Quarry Link] Node "..mod_name..":"..target.." (target) is not registered, unable to override pick).")
+                minetest.log("error", "[Quarry Link] Node "..mod_name..":"..target.." (target) is not registered, unable to override pick).")
             end
 
             local is_sandstone_or_quartz = not (string.find(target, "sandstone") == nil) or not (string.find(target, "quartz") == nil)
@@ -246,14 +246,14 @@ for tool, conversions in pairs(conversions_by_tool) do
             local is_irregular = irregularly_named_pairs[target] ~= nil
             result = is_irregular and irregularly_named_pairs[target] or string.gsub(target, "brick", result)
 
-            minetest.log("action", "[Quarry Link] "..target.." - "..result.." (for pick)")
+            -- minetest.log("action", "[Quarry Link] "..target.." - "..result.." (for pick)")
             if not quarry_link.is_registered(result, result_in_mod) then
                 is_ok = false
-                minetest.log("action", "[Quarry Link] Node "..result_in_mod..":"..result.." (result) is not registered, unable to override pick).")
+                minetest.log("error", "[Quarry Link] Node "..result_in_mod..":"..result.." (result) is not registered, unable to override pick).")
             end
 
             if is_ok then
-                minetest.log("action", "[Quarry Link] Attempting to override pick for "..mod_name..":"..target.." with "..result_in_mod..":"..result)
+                -- minetest.log("action", "[Quarry Link] Attempting to override pick for "..mod_name..":"..target.." with "..result_in_mod..":"..result)
                 quarry.override_pick(mod_name..":"..target, result_in_mod..":"..result, {cracky = 2})
 
                 for _, stair in ipairs(stairs) do
