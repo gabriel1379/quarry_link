@@ -7,28 +7,6 @@ function quarry_link.override_resource_node(resource_node, cobble_name)
     })
 end
 
-function quarry_link.snake_case(this_string)
-    this_string = string.lower(this_string)
-    this_string = string.gsub(this_string, ' ', '_')
-
-    return this_string
-end
-
-function quarry_link.firstToUpper(str)
-    return (str:gsub("^%l", string.upper))
-end
-
-function quarry_link.capitalize_firsts(this_string)
-    this_string = string.gsub(this_string, '_', ' ')
-    local new_string = ''
-    for token in string.gmatch(this_string, "[^%s]+") do
-        token = quarry_link.firstToUpper(token)
-        new_string = new_string..' '..token
-    end
-
-    return string.gsub(new_string, ' ', '', 1)
-end
-
 function quarry_link.is_registered(node, in_mod)
     local is_registered = minetest.registered_nodes[in_mod..":"..node] and true or false
     -- minetest.log("action", "[Quarry_Link] "..in_mod..":"..node.." "..(is_registered and "is registered." or "is not registered."))
@@ -49,13 +27,6 @@ function quarry_link.determine_cobble_name(base_stone, in_mod)
     -- minetest.log("action", "[Quarry_Link] ".."Using name "..cobble_name..".")
 
     return cobble_name
-end
-
-function quarry_link.read_block_suffix(base_stone)
-    local is_block = string.find(base_stone, "block") or false
-    local block_suffix = is_block and "_block" or ""
-
-    return block_suffix
 end
 
 function quarry_link.register_cobble(cobble_name)
@@ -206,13 +177,5 @@ function quarry_link.register_rubble(stone_name, in_mod)
         sounds = default.node_sound_stone_defaults(),
         on_dig = quarry.mortar_on_dig(in_mod.."_"..base_stone.."_brick", {sticky = 3}),
     })
-end
-
-function quarry_link.table_flip(t)
-    local s={}
-    for k,v in pairs(t) do
-        s[v]=k
-    end
-    return s
 end
      

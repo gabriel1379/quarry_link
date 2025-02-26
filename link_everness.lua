@@ -164,10 +164,10 @@ for tool, conversions in pairs(conversions_by_tool) do
 
             local bad_result = "cobble"
             local is_sandstone_or_quartz = not (string.find(target, "sandstone") == nil) or not (string.find(target, "quartz") == nil)
-            minetest.log("action", "[Quarry Link] target: "..target)
+            -- minetest.log("action", "[Quarry Link] target: "..target)
             if is_sandstone_or_quartz then
                 bad_result = "rubble"
-                minetest.log("action", "[Quarry Link] Attempting to register rubble variant for "..name..", with technical name: "..target.."_rubble")
+                -- minetest.log("action", "[Quarry Link] Attempting to register rubble variant for "..name..", with technical name: "..target.."_rubble")
                 quarry_link.register_rubble(name, "quarry_link")
             end
 
