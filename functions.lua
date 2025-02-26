@@ -20,7 +20,7 @@ end
 
 function quarry_link.capitalize_firsts(this_string)
     this_string = string.gsub(this_string, '_', ' ')
-    new_string = ''
+    local new_string = ''
     for token in string.gmatch(this_string, "[^%s]+") do
         token = quarry_link.firstToUpper(token)
         new_string = new_string..' '..token
