@@ -12,6 +12,7 @@ local path_own = minetest.get_modpath("quarry_link")
 local function_files = {
     "functions_util.lua",
     "functions.lua",
+    "functions_linker.lua",
 }
 
 for _,function_file in ipairs(function_files) do
