@@ -1,0 +1,119 @@
+--BLOCKS--
+bamboo_block
+bamboo_dry_block
+coral_bones_block
+coral_deep_ocean_sandstone_block
+coral_desert_stone_block
+crystal_block_cyan
+crystal_block_orange
+crystal_block_purple
+crystal_forest_deep_ocean_sandstone_block
+crystal_moss_block
+cursed_lands_deep_ocean_sandstone_block
+cursed_sandstone_block
+frosted_snowblock
+mineral_sandstone_block
+mineral_sandstone_brick_block
+mineral_stone_block
+moss_block
+pyriteblock
+pyriteblock_brick
+pyriteblock_forged
+pyriteblock_polished
+pyriteblock_slab_brick
+pyriteblock_spiral
+quartz_block
+termite_block
+--BRICKS--
+coral_bones_brick
+coral_deep_ocean_sandstone_brick
+coral_desert_stone_brick
+coral_sandstone_brick
+coral_white_sandstone_brick
+crystal_forest_deep_ocean_sandstone_brick
+crystal_sandstone_brick
+crystal_stone_brick
+cursed_brick
+cursed_brick_carved
+cursed_brick_mixed
+cursed_brick_with_growth
+cursed_lands_deep_ocean_sandstone_brick
+cursed_sandstone_brick
+forsaken_desert_brick
+forsaken_desert_brick_red
+forsaken_tundra_brick
+mineral_sandstone_brick
+mineral_stone_brick
+mineral_stone_brick_with_flower_growth
+mineral_stone_brick_with_growth
+--COBBLES--
+coral_desert_cobble
+coral_desert_mossy_cobble
+crystal_cobble
+crystal_mossy_cobble
+forsaken_desert_cobble
+forsaken_desert_cobble_red
+forsaken_tundra_cobble
+icecobble
+magmacobble
+mineral_stone_cobble
+mold_cobble
+snowcobble
+--STONES--
+coral_desert_stone
+coral_desert_stone_with_coal
+coral_desert_stone_with_moss
+coral_sandstone
+coral_sandstone_carved_1
+coral_sandstone_chiseled
+coral_white_sandstone
+coral_white_sandstone_pillar
+crystal_sandstone
+crystal_sandstone_chiseled
+crystal_stone
+crystal_stone_with_coal
+cursed_dream_stone
+cursed_stone
+cursed_stone_carved
+cursed_stone_carved_with_coal
+forsaken_desert_chiseled_stone
+forsaken_desert_engraved_stone
+forsaken_desert_stone
+forsaken_tundra_stone
+mineral_sandstone
+mineral_stone
+mineral_stone_with_ceramic_sherds
+mineral_stone_with_coal
+mold_stone_with_moss
+soul_sandstone
+soul_sandstone_veined
+stone_with_pyrite
+sulfur_stone
+--RUBBLES--
+--OBSIDIANS--
+blue_crying_obsidian
+blue_weeping_obsidian
+weeping_obsidian
+--QUARTZES--
+quartz_chiseled
+quartz_ore
+quartz_pillar
+
+coral_desert_stone -> coral_desert_cobble
+crystal_stone -> crystal_cobble
+forsaken_desert_chiseled_stone -> forsaken_desert_cobble
+forsaken_desert_engraved_stone -> forsaken_desert_cobble
+forsaken_desert_stone -> forsaken_desert_cobble
+forsaken_tundra_stone -> forsaken_tundra_cobble
+mineral_stone -> mineral_stone_cobble
+
+coral_desert_stone_brick -> coral_desert_cobble
+crystal_forest_deep_ocean_sandstone_brick -> crystal_cobble
+crystal_sandstone_brick -> crystal_cobble
+crystal_stone_brick -> crystal_cobble
+forsaken_desert_brick -> forsaken_desert_cobble
+forsaken_desert_brick_red -> forsaken_desert_cobble
+forsaken_tundra_brick -> forsaken_tundra_cobble
+mineral_stone_brick -> mineral_stone_cobble
+mineral_stone_brick_with_flower_growth -> mineral_stone_cobble
+mineral_stone_brick_with_growth -> mineral_stone_cobble
