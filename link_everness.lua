@@ -12,11 +12,7 @@ local resource_nodes_everness = {
     -- {"cursed_stone_carved_with_coal"}, has no cobble (yet)
     {"mineral_stone_with_coal", mod_name..":mineral_stone_cobble"},
 }
-for _,resource_node in ipairs(resource_nodes_everness) do
-    quarry_link.override_resource_node(mod_name..":"..resource_node[1], resource_node[2])
-end
--- Resource nodes END
-
+quarry_link.quarrify_resource_nodes(resource_nodes_everness, mod_name)
 
 local conversions_by_tool = {
     hammer = {

@@ -12,9 +12,7 @@ local resource_nodes_technic = {
     "mineral_uranium",
     "mineral_zinc",
 }
-for _,resource_node_technic in ipairs(resource_nodes_technic) do
-    quarry.override_with(mod_name..":"..resource_node_technic)
-end
+quarry_link.quarrify_resource_nodes(resource_nodes_technic, mod_name)
 
 local stones_to_process = {
     "Granite",

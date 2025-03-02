@@ -9,6 +9,4 @@ local resource_nodes_moreores = {
     "mineral_silver",
     "mineral_mithril",
 }
-for _,resource_node_moreores in ipairs(resource_nodes_moreores) do
-    quarry.override_with(mod_name..":"..resource_node_moreores)
-end
+quarry_link.quarrify_resource_nodes(resource_nodes_moreores, mod_name)

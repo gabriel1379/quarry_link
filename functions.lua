@@ -178,4 +178,13 @@ function quarry_link.register_rubble(stone_name, in_mod)
         on_dig = quarry.mortar_on_dig(in_mod.."_"..base_stone.."_brick", {sticky = 3}),
     })
 end
-     
+
+function quarry_link.quarrify_resource_nodes(resource_nodes, in_mod)
+    for _,resource_node in ipairs(resource_nodes) do
+        if type(resource_node) == "table" then
+            quarry_link.override_resource_node(in_mod..":"..resource_node[1], resource_node[2])
+        else
+            quarry.override_with(in_mod..":"..resource_node)
+        end
+    end
+end
