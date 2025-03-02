@@ -14,7 +14,7 @@ Technic [ContentDB](https://content.luanti.org/packages/RealBadAngel/technic/) [
 Currently supported features:
 -----------------------------
 - The resource nodes from the above mods will behave according to Quarry Mechanics (will turn to cobble and fall after being mined).
-- **Everness**:
-1. Most stones, stairs, slabs and blocks can now be quarried/pickaxed/mortarred normally with **Quarry** tools, like their default variants. However, some lack the required variants (e.g. cobble, brick, or block), so some operations may not be possible with some nodes yet; dummy images may also appear.
+- **Everness**: Most stones, stairs, slabs and blocks can now be quarried/pickaxed/mortarred normally with **Quarry** tools, like their default variants. However, some lack the required variants (e.g. cobble, brick, or block), so some operations may not be possible with some nodes yet; dummy images may also appear.
+- **Technic**:
+1. Granite and Marble can now be quarried/pickaxed/mortarred normally with **Quarry** tools, like their default variants.
 2. Replaced `default:stone` with `quarry:cut_stone` in machine crafting recipes that required the former (LV compressor, LV generator).
-- **Technic**: Granite and Marble can now be quarried/pickaxed/mortarred normally with **Quarry** tools, like their default variants.
