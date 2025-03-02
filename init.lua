@@ -21,6 +21,7 @@ end
 
 local mods_linked = {
     "everness",
+    "moreores",
     "technic",
 }
 

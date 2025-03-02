@@ -8,6 +8,7 @@ This mod links the mod Quarry Mechanics [ContentDB](https://content.luanti.org/p
 Currently supported mods:
 -------------------------
 Everness [ContentDB](https://content.luanti.org/packages/SaKeL/everness/) [Source](https://bitbucket.org/minetest_gamers/everness/src/master/)  
+More Ores [ContentDB](https://content.luanti.org/packages/Calinou/moreores/)[Source](https://github.com/minetest-mods/moreores)
 Technic [ContentDB](https://content.luanti.org/packages/RealBadAngel/technic/) [Source](https://github.com/minetest-mods/technic)  
 
 Currently supported features:
