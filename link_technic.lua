@@ -3,17 +3,6 @@ if (not minetest.get_modpath(mod_name.."_worldgen")) then
     return
 end
 
--- Strengthen Quarry hammer, so granite can be quarried too.
-minetest.override_item("quarry:stone_quarry_hammer", {
-	tool_capabilities = {
-        full_punch_interval = 1.3,
-		max_drop_level=0,
-		groupcaps = {
-			cracky = {times={[1]=5.00, [2]=2.0, [3]=1.00}, uses=30, maxlevel=1}},
-		damage_groups = {fleshy=3},
-    },
-})
-
 -- Make Technic resource nodes work the same way
 -- as the default resource nodes.
 local resource_nodes_technic = {
