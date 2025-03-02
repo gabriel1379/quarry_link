@@ -32,3 +32,32 @@ for _,stone_name in ipairs(stones_to_process) do
     quarry_link.clear_crafts(stone_name, mod_name)
     -- quarry_link.register_block_craft_recipe(stone_name)
 end
+
+local crafts_to_replace = {
+    lv_compressor = {
+        recipe = {
+            {"quarry:cut_stone", "basic_materials:motor", "quarry:cut_stone"},
+            {"mesecons:piston", "technic:machine_casing", "mesecons:piston"},
+            {"basic_materials:silver_wire", "technic:lv_cable", "basic_materials:silver_wire"},
+        },
+        replacements = {
+            {"basic_materials:silver_wire", "basic_materials:empty_spool"},
+            {"basic_materials:silver_wire", "basic_materials:empty_spool"},
+        },
+    },
+    lv_generator = {
+        recipe = {
+            {"quarry:cut_stone", "default:furnace",        "quarry:cut_stone"},
+            {"quarry:cut_stone", "technic:machine_casing", "quarry:cut_stone"},
+            {"quarry:cut_stone", "technic:lv_cable",       "quarry:cut_stone"},
+        }
+    },
+}
+
+for craft,details in pairs(crafts_to_replace) do
+    if details["replacements"] ~= nil then
+        quarry_link.replace_craft(craft, mod_name, details["recipe"], details["replacements"])
+    else
+        quarry_link.replace_craft(craft, mod_name, details["recipe"])
+    end
+end

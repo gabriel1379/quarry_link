@@ -188,3 +188,21 @@ function quarry_link.quarrify_resource_nodes(resource_nodes, in_mod)
         end
     end
 end
+
+function quarry_link.replace_craft(output, in_mod, recipe, replacements)
+    output = in_mod..":"..output
+    minetest.clear_craft({output = output})
+
+    if replacements ~= nil then
+        minetest.register_craft({
+            output = output,
+            recipe = recipe,
+            replacements = replacements,
+        })
+    else
+        minetest.register_craft({
+            output = output,
+            recipe = recipe,
+        })
+    end
+end
