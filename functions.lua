@@ -9,7 +9,6 @@ end
 
 function quarry_link.is_registered(node, in_mod)
     local is_registered = minetest.registered_nodes[in_mod..":"..node] and true or false
-    -- minetest.log("action", "[Quarry_Link] "..in_mod..":"..node.." "..(is_registered and "is registered." or "is not registered."))
 
     return is_registered
 end

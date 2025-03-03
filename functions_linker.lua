@@ -31,7 +31,7 @@ function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs
                 if is_sandstone_or_quartz then
                     bad_result = "rubble"
                     -- minetest.log("action", "[Quarry Link] Attempting to register rubble variant for "..name..", with technical name: "..target.."_rubble")
-                    quarry_link.register_rubble(name, "quarry_link")
+                    quarry_link.register_rubble(name, mod_name)
                 end
 
                 local is_irregular = irregularly_named_pairs[target] ~= nil
@@ -42,7 +42,7 @@ function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs
                 quarry.override_hammer(mod_name..":"..target, "quarry_link:cut_"..target, mod_name..":"..bad_result, {cracky = 3})
 
                 -- minetest.log("action", "[Quarry Link] Attempting to register stairs and slab for "..mod_name..":"..target)
-                quarry_link.register_cut_stone_or_block_stair_and_slab(name, "quarry_link")
+                quarry_link.register_cut_stone_or_block_stair_and_slab(name, mod_name)
 
                 for _, stair in ipairs(stairs) do
                     if (quarry_link.is_registered(stair.."_"..target, "stairs")) and (quarry_link.is_registered(stair.."_cut_"..target, "stairs")) then
