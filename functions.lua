@@ -9,6 +9,7 @@ end
 
 function quarry_link.is_registered(node, in_mod)
     local is_registered = minetest.registered_nodes[in_mod..":"..node] and true or false
+    -- minetest.log("action", "[Quarry Link] "..in_mod..":"..node.." is "..(is_registered and "" or "NOT ").."registered.")
 
     return is_registered
 end
@@ -148,20 +149,21 @@ end
 function quarry_link.clear_crafts(stone_name, in_mod)
     local base_stone = quarry_link.snake_case(stone_name)
     local crafts_to_clear = {
-        in_mod..":"..base_stone,
-        in_mod..":"..base_stone.."_block",
-        in_mod..":"..base_stone.."_brick",
-        in_mod..":"..base_stone.."_bricks",
-        in_mod..":"..base_stone.."brick",
-        in_mod..":"..base_stone.."bricks",
-        "stairs:stair_"..base_stone,
-        "stairs:stair_inner_"..base_stone,
-        "stairs:stair_outer_"..base_stone,
+        {base_stone, in_mod},
+        {base_stone.."_block", in_mod},
+        {base_stone.."_brick", in_mod},
+        {base_stone.."_bricks", in_mod},
+        {base_stone.."brick", in_mod},
+        {base_stone.."bricks", in_mod},
+        {"slab_"..base_stone, "stairs"},
+        {"stair_"..base_stone, "stairs"},
+        {"stair_inner_"..base_stone, "stairs"},
+        {"stair_outer_"..base_stone, "stairs"},
     }
 
     for _, craft_to_clear in ipairs(crafts_to_clear) do
-        if quarry_link.is_registered(craft_to_clear, in_mod) then
-            minetest.clear_craft({output = craft_to_clear})
+        if quarry_link.is_registered(craft_to_clear[1], craft_to_clear[2]) then
+            minetest.clear_craft({output = craft_to_clear[2]..":"..craft_to_clear[1]})
         end
     end
 end
