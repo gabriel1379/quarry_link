@@ -107,15 +107,15 @@ function quarry_link.register_cut_stone_or_block_stair_and_slab(stone_name, in_m
     -- minetest.log("action", "Registered ".."Cut "..stone_name.." Stair and Slab.")
 end
 
-function quarry_link.set_tools_for_stair_and_slab(stone_name, in_mod, is_own_cobble, conversions_by_tool)
-    local base_stone = quarry_link.snake_case(stone_name)
-    local cobble_mod = is_own_cobble and "quarry_link" or in_mod
-    local cobble_name = quarry_link.determine_cobble_name(base_stone, cobble_mod)
-    -- minetest.log("action", "[Quarry_Link] base stone: "..base_stone)
+function quarry_link.set_tools_for_stair_and_slab(material_name, in_mod, is_ql_cobble, conversions_by_tool)
+    local material = quarry_link.snake_case(material_name)
+    local cobble_mod = is_ql_cobble and "quarry_link" or in_mod
+    local cobble_name = quarry_link.determine_cobble_name(material, cobble_mod)
+    -- minetest.log("action", "[Quarry_Link] base stone: "..material)
     -- minetest.log("action", "[Quarry_Link] cobble name: "..cobble_name)
 
-    quarry_link.register_cut_stone_or_block_stair_and_slab(stone_name, in_mod)
-    quarry_link.register_cut_stone_or_block_stair_and_slab(stone_name.." Block", in_mod)
+    quarry_link.register_cut_stone_or_block_stair_and_slab(material_name, in_mod)
+    quarry_link.register_cut_stone_or_block_stair_and_slab(material_name.." Block", in_mod)
 
     local stairs = {
         "slab",
@@ -125,21 +125,21 @@ function quarry_link.set_tools_for_stair_and_slab(stone_name, in_mod, is_own_cob
     }
 
     for _,stair in ipairs(stairs) do
-        -- minetest.log("action", "[Quarry Link]Overriding for stairs, using 'stairs:"..stair.."_"..base_stone.."', 'stairs:"..stair.."_cut_"..base_stone.."' and 'stairs:"..stair.."_"..cobble_name.."'")
+        -- minetest.log("action", "[Quarry Link]Overriding for stairs, using 'stairs:"..stair.."_"..material.."', 'stairs:"..stair.."_cut_"..base_stone.."' and 'stairs:"..stair.."_"..cobble_name.."'")
         quarry.override_hammer(
-            "stairs:"..stair.."_"..base_stone,
-            "stairs:"..stair.."_cut_"..base_stone,
+            "stairs:"..stair.."_"..material,
+            "stairs:"..stair.."_cut_"..material,
             "stairs:"..stair.."_"..cobble_name,
             {cracky = 3}
         )
         quarry.override_mortar(
-            "stairs:"..stair.."_cut_"..base_stone,
-            "stairs:"..stair.."_"..base_stone,
+            "stairs:"..stair.."_cut_"..material,
+            "stairs:"..stair.."_"..material,
             {stair = 1, falling_node = 1, dig_immediate = 2},
             {sticky = 2}
         )
         quarry.override_pick(
-            "stairs:"..stair..base_stone,
+            "stairs:"..stair..material,
             "stairs:"..stair..cobble_name,
             {cracky = 2}
         )

@@ -89,7 +89,13 @@ function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs
                             {stair = 1, falling_node = 1, dig_immediate = 2},
                             {sticky = 2}
                         )
-                    else
+                    elseif ((is_cobble or is_rubble) and (quarry_link.is_registered(stair.."_"..target, "stairs")) and (quarry_link.is_registered(stair.."_"..result, "stairs"))) then
+                        quarry.override_mortar(
+                            "stairs:"..stair.."_"..target,
+                            "stairs:"..stair.."_"..result,
+                            {stair = 1, falling_node = 1, dig_immediate = 2},
+                            {sticky = 2}
+                        )
                         -- minetest.log("action", "[Quarry Link] Node stairs:"..stair.."_cut_"..target.." is not registered, unable to override mortar).")
                     end
                 end
