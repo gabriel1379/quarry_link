@@ -1,3 +1,9 @@
+local tool_registration_order = {
+    "hammer",
+    "mortar",
+    "pick",
+}
+
 local stairs = {
     "slab",
     "stair",
@@ -6,9 +12,9 @@ local stairs = {
 }
 
 function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs)
-    for tool, conversions in pairs(conversions_by_tool) do
+    for _, tool in ipairs(tool_registration_order) do
         if tool == "hammer" then
-            for _, target in ipairs(conversions) do
+            for _, target in ipairs(conversions_by_tool[tool]) do
                 local is_ok = true
                 
                 local name = quarry_link.capitalize_firsts(target)
@@ -63,7 +69,7 @@ function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs
             end
         end
         if tool == "mortar" then
-            for _, target in ipairs(conversions) do
+            for _, target in ipairs(conversions_by_tool[tool]) do
                 local is_cut = string.sub(target, 1, 4) == "cut_"
                 local is_cobble = not (string.find(target, "cobble") == nil)
                 local is_rubble = not (string.find(target, "rubble") == nil)
@@ -83,27 +89,19 @@ function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs
                 end
 
                 for _, stair in ipairs(stairs) do
-                    if (quarry_link.is_registered(stair.."_cut_"..result, "stairs")) and (quarry_link.is_registered(stair.."_"..result, "stairs")) then
-                        quarry.override_mortar(
-                            "stairs:"..stair.."_cut_"..result,
-                            "stairs:"..stair.."_"..result,
-                            {stair = 1, falling_node = 1, dig_immediate = 2},
-                            {sticky = 2}
-                        )
-                    elseif ((is_cobble or is_rubble) and (quarry_link.is_registered(stair.."_"..target, "stairs")) and (quarry_link.is_registered(stair.."_"..result, "stairs"))) then
+                    if (quarry_link.is_registered(stair.."_"..target, "stairs")) and (quarry_link.is_registered(stair.."_"..result, "stairs")) then
                         quarry.override_mortar(
                             "stairs:"..stair.."_"..target,
                             "stairs:"..stair.."_"..result,
                             {stair = 1, falling_node = 1, dig_immediate = 2},
                             {sticky = 2}
                         )
-                        -- minetest.log("action", "[Quarry Link] Node stairs:"..stair.."_cut_"..target.." is not registered, unable to override mortar).")
                     end
                 end
             end
         end
         if tool == "pick" then
-            for _, target in ipairs(conversions) do
+            for _, target in ipairs(conversions_by_tool[tool]) do
                 local is_ok = true
                 if not quarry_link.is_registered(target, mod_name) then
                     is_ok = false
