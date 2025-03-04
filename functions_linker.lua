@@ -13,8 +13,8 @@ local stairs = {
 
 function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs)
     for _, tool in ipairs(tool_registration_order) do
-        if tool == "hammer" then
-            for _, target in ipairs(conversions_by_tool[tool]) do
+        for _, target in ipairs(conversions_by_tool[tool]) do
+            if tool == "hammer" then
                 local is_ok = true
                 
                 local name = quarry_link.capitalize_firsts(target)
@@ -66,10 +66,7 @@ function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs
 
                 -- minetest.log("action", "[Quarry Link] Attempting to register block craft recipe for cut_"..target)
                 quarry_link.register_block_craft_recipe("cut_"..target)
-            end
-        end
-        if tool == "mortar" then
-            for _, target in ipairs(conversions_by_tool[tool]) do
+            elseif tool == "mortar" then
                 local is_cut = string.sub(target, 1, 4) == "cut_"
                 local is_cobble = not (string.find(target, "cobble") == nil)
                 local is_rubble = not (string.find(target, "rubble") == nil)
@@ -98,10 +95,7 @@ function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs
                         )
                     end
                 end
-            end
-        end
-        if tool == "pick" then
-            for _, target in ipairs(conversions_by_tool[tool]) do
+            elseif tool == "pick" then
                 local is_ok = true
                 if not quarry_link.is_registered(target, mod_name) then
                     is_ok = false
