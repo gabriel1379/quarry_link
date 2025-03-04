@@ -41,8 +41,9 @@ function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs
                 -- minetest.log("action", "[Quarry Link] Attempting to override hammer for "..mod_name..":"..target.." with quarry_link:cut_"..target.." and "..mod_name..":"..bad_result)
                 quarry.override_hammer(mod_name..":"..target, "quarry_link:cut_"..target, mod_name..":"..bad_result, {cracky = 3})
 
-                -- minetest.log("action", "[Quarry Link] Attempting to register stairs and slab for "..mod_name..":"..target)
-                quarry_link.register_cut_stone_or_block_stair_and_slab(name, mod_name)
+                if (quarry_link.is_registered("stair_"..target, "stairs")) then
+                    quarry_link.register_cut_stone_or_block_stair_and_slab(name, mod_name)
+                end
 
                 for _, stair in ipairs(stairs) do
                     if (quarry_link.is_registered(stair.."_"..target, "stairs")) and (quarry_link.is_registered(stair.."_cut_"..target, "stairs")) then
@@ -82,10 +83,10 @@ function quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs
                 end
 
                 for _, stair in ipairs(stairs) do
-                    if (quarry_link.is_registered(stair.."_cut_"..target, "stairs")) and (quarry_link.is_registered(stair.."_"..target, "stairs")) then
+                    if (quarry_link.is_registered(stair.."_cut_"..result, "stairs")) and (quarry_link.is_registered(stair.."_"..result, "stairs")) then
                         quarry.override_mortar(
-                            "stairs:"..stair.."_cut_"..target,
-                            "stairs:"..stair.."_"..target,
+                            "stairs:"..stair.."_cut_"..result,
+                            "stairs:"..stair.."_"..result,
                             {stair = 1, falling_node = 1, dig_immediate = 2},
                             {sticky = 2}
                         )
