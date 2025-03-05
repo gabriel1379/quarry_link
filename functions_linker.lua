@@ -25,21 +25,21 @@ function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
             on_dig = quarry.mortar_on_dig(mod_name..":"..target, {sticky = 2}),
         })
 
-        local bad_result = "cobble"
+        local broken_result = "cobble"
         local is_sandstone_or_quartz = not (string.find(target, "sandstone") == nil) or not (string.find(target, "quartz") == nil)
         -- minetest.log("action", "[Quarry Link] target: "..target)
         if is_sandstone_or_quartz then
-            bad_result = "rubble"
+            broken_result = "rubble"
             -- minetest.log("action", "[Quarry Link] Attempting to register rubble variant for "..name..", with technical name: "..target.."_rubble")
             quarry_link.register_rubble(name, mod_name)
         end
 
         local is_irregular = irregularly_named_pairs[target] ~= nil
-        bad_result = is_irregular and irregularly_named_pairs[target] or target.."_"..bad_result
-        bad_result = is_block and string.gsub(bad_result, "block_", "") or bad_result
-        bad_result = quarry_link.is_registered(bad_result, mod_name) and bad_result or string.gsub(bad_result, "stone_", "")
-        -- minetest.log("action", "[Quarry Link] Attempting to override hammer for "..mod_name..":"..target.." with quarry_link:cut_"..target.." and "..mod_name..":"..bad_result)
-        quarry.override_hammer(mod_name..":"..target, "quarry_link:cut_"..target, mod_name..":"..bad_result, {cracky = 3})
+        broken_result = is_irregular and irregularly_named_pairs[target] or target.."_"..broken_result
+        broken_result = is_block and string.gsub(broken_result, "block_", "") or broken_result
+        broken_result = quarry_link.is_registered(broken_result, mod_name) and broken_result or string.gsub(broken_result, "stone_", "")
+        -- minetest.log("action", "[Quarry Link] Attempting to override hammer for "..mod_name..":"..target.." with quarry_link:cut_"..target.." and "..mod_name..":"..broken_result)
+        quarry.override_hammer(mod_name..":"..target, "quarry_link:cut_"..target, mod_name..":"..broken_result, {cracky = 3})
 
         if (quarry_link.is_registered("stair_"..target, "stairs")) then
             quarry_link.register_cut_stone_or_block_stair_and_slab(name, mod_name)
@@ -50,7 +50,7 @@ function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
                 quarry.override_hammer(
                     "stairs:"..stair.."_"..target,
                     "stairs:"..stair.."_cut_"..target,
-                    "stairs:"..stair.."_"..bad_result,
+                    "stairs:"..stair.."_"..broken_result,
                     {cracky = 3}
                 )
             end
