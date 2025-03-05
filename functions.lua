@@ -42,9 +42,9 @@ function quarry_link.register_cobble(cobble_name)
     })
 end
 
-function quarry_link.register_cut_stone_or_block(base_stone_name, in_mod)
-    local base_stone = quarry_link.snake_case(base_stone_name)
+function quarry_link.register_cut_variant(base_stone, base_stone_name, in_mod)
     local block_suffix = quarry_link.read_block_suffix(base_stone)
+    -- minetest.log("action", "[Quarry Link] "..base_stone.."'s block suffix: >"..block_suffix.."<")
 
     minetest.register_node("quarry_link:cut_"..base_stone, {
         description = "Cut "..base_stone_name,
@@ -57,10 +57,12 @@ function quarry_link.register_cut_stone_or_block(base_stone_name, in_mod)
     })
 end
 
-function quarry_link.register_block_craft_recipe(base_stone)
-    base_stone = quarry_link.snake_case(base_stone)
+function quarry_link.register_block_craft_recipe(block_name)
+    block_name = "quarry_link:"..quarry_link.snake_case(block_name)
+    base_stone = string.gsub(block_name, "_block", "")
+    -- minetest.log("action", "[Quarry Link] Using for block craft recipe registration: block_name "..block_name.." and base_stone "..base_stone)
     minetest.register_craft({
-        output = base_stone.."_block 9",
+        output = block_name.." 9",
         recipe = {
                 {base_stone, base_stone, base_stone},
                 {base_stone, base_stone, base_stone},
