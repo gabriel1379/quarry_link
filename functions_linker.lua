@@ -5,8 +5,18 @@ local stairs = {
     "stair_outer",
 }
 
+local adjectives_worked = {"carved", "chiseled", "engraved", "pillar"}
+
 function quarry_link.is_irregular(target)
     return irregular_pairs[target] ~= nil
+end
+
+function quarry_link.is_base(target)
+    for _, adjective in ipairs(adjectives_worked) do
+        if string.find(target, adjective) ~= nil then return true end
+    end
+
+    return false
 end
 
 function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
@@ -14,21 +24,25 @@ function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
         local name = quarry_link.capitalize_firsts(target)
         local block_suffix = quarry_link.read_block_suffix(target)
         local is_block = block_suffix ~= ""
-        -- minetest.log("action", "[Quarry Link] Attempting to register cut variant for "..name..", with technical name: "..target)
-        minetest.register_node("quarry_link:cut_"..target, {
-            description = "Cut "..name,
-            tiles = {mod_name.."_"..target..".png^quarry_cut_stone"..block_suffix..".png"},
-            groups = {stone = 1, falling_node = 1, dig_immediate = 2},
-            drop = "quarry_link:cut_"..target,
-            legacy_mineral = true,
-            sounds = default.node_sound_stone_defaults(),
-            on_dig = quarry.mortar_on_dig(mod_name..":"..target, {sticky = 2}),
-        })
+        local is_base = quarry_link.is_base(target)
+        local is_sandstone = string.find(target, "sandstone") ~= nil
+        local is_stone = not is_sandstone and string.find(target, "stone") ~= nil
+        local is_quartz = string.find(target, "quartz") ~= nil
+
+        if is_base and not is_block then
+            -- minetest.log("action", "[Quarry Link] Clearing craft: "..mod_name..":"..target)
+            quarry_link.clear_crafts(target, mod_name)
+        end
+        -- minetest.log("action", "[Quarry Link] Attempting to register cut variant for "..target)
+        quarry_link.register_cut_variant(target, name, mod_name)
+        if is_block then
+            -- minetest.log("action", "[Quarry Link] Attempting to register block craft recipe for cut_"..target)
+            quarry_link.register_block_craft_recipe("cut_"..target)
+        end
 
         local broken_result = "cobble"
-        local is_sandstone_or_quartz = not (string.find(target, "sandstone") == nil) or not (string.find(target, "quartz") == nil)
         -- minetest.log("action", "[Quarry Link] target: "..target)
-        if is_sandstone_or_quartz then
+        if is_sandstone or is_quartz then
             broken_result = "rubble"
             -- minetest.log("action", "[Quarry Link] Attempting to register rubble variant for "..name..", with technical name: "..target.."_rubble")
             quarry_link.register_rubble(name, mod_name)
@@ -55,11 +69,6 @@ function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
                 )
             end
         end
-
-        quarry_link.clear_crafts(target, mod_name)
-
-        -- minetest.log("action", "[Quarry Link] Attempting to register block craft recipe for cut_"..target)
-        quarry_link.register_block_craft_recipe("cut_"..target)
     end
 end
 

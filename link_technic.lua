@@ -25,8 +25,9 @@ for _,missing_cobble in ipairs(missing_cobbles) do
 end
 
 for _,stone_name in ipairs(stones_to_process) do
-    quarry_link.register_cut_stone_or_block(stone_name, mod_name)
-    -- quarry_link.register_cut_stone_or_block(stone_name.." Block", mod_name)
+    stone = quarry_link.snake_case(stone_name)
+    quarry_link.register_cut_variant(stone, stone_name, mod_name)
+    -- quarry_link.register_cut_variant(stone_name.." Block", mod_name)
     quarry_link.set_tools_for_stone(stone_name, mod_name, true, true)
     -- quarry_link.set_tools_for_stair_and_slab(stone_name, mod_name, true)
     quarry_link.clear_crafts(stone_name, mod_name)
