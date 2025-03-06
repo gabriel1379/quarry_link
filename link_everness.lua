@@ -39,7 +39,9 @@ local conversions_by_tool = {
         "forsaken_desert_engraved_stone",
         "forsaken_tundra_stone",
         "mineral_sandstone",
+        "mineral_sandstone_block",
         "mineral_stone",
+        "mineral_stone_block",
         "quartz_block", -- MISSING
         "quartz_chiseled", -- MISSING
         "quartz_pillar", -- MISSING
@@ -85,6 +87,7 @@ local conversions_by_tool = {
         "cut_mineral_sandstone_block",
         "cut_mineral_sandstone",
         "cut_mineral_stone",
+        "cut_mineral_stone_block",
         "cut_quartz_block",
         "cut_quartz_chiseled",
         "cut_quartz_pillar",
