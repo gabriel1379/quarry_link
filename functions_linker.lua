@@ -13,24 +13,25 @@ end
 
 function quarry_link.is_base(target)
     for _, adjective in ipairs(adjectives_worked) do
-        if string.find(target, adjective) ~= nil then return true end
+        if string.find(target, adjective) ~= nil then return false end
     end
 
-    return false
+    return true
 end
 
 function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
     for _, target in ipairs(conversions) do
         local name = quarry_link.capitalize_firsts(target)
         local block_suffix = quarry_link.read_block_suffix(target)
-        local is_block = block_suffix ~= ""
         local is_base = quarry_link.is_base(target)
+        local is_block = block_suffix ~= ""
+        local is_brick = string.find(target, "brick") ~= nil
         local is_sandstone = string.find(target, "sandstone") ~= nil
         local is_stone = not is_sandstone and string.find(target, "stone") ~= nil
         local is_quartz = string.find(target, "quartz") ~= nil
 
-        if is_base and not is_block then
-            -- minetest.log("action", "[Quarry Link] Clearing craft: "..mod_name..":"..target)
+        if is_base and (is_stone or is_sandstone or is_block or is_brick) then
+            minetest.log("action", "[Quarry Link] Clearing craft: "..mod_name..":"..target)
             quarry_link.clear_crafts(target, mod_name)
         end
         -- minetest.log("action", "[Quarry Link] Attempting to register cut variant for "..target)
