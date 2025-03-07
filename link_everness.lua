@@ -15,7 +15,7 @@ local resource_nodes_everness = {
 quarry_link.quarrify_resource_nodes(resource_nodes_everness, mod_name)
 
 local conversions_by_tool = {
-    hammer = {
+    hammer = { -- NO BRICKS!!!
         "coral_bones_block",
         "coral_deep_ocean_sandstone_block",
         "coral_desert_stone",
@@ -49,16 +49,41 @@ local conversions_by_tool = {
         "soul_sandstone_veined",
         "sulfur_stone",
     },
+    pick = { -- BRICKS ONLY!!!!
+        "coral_bones_brick",
+        "coral_sandstone_brick",
+        "coral_white_sandstone_brick",
+        "crystal_forest_deep_ocean_sandstone_brick",
+        "crystal_mossy_brick",
+        "crystal_stone_brick",
+        "coral_deep_ocean_sandstone_brick", -- MISSING
+        "coral_desert_stone_brick", -- MISSING
+        "cursed_brick", -- MISSING
+        "cursed_brick_with_growth", -- MISSING
+        "cursed_lands_deep_ocean_sandstone_brick",
+        "cursed_sandstone_brick", -- MISSING
+        "forsaken_desert_brick",
+        "forsaken_desert_brick_red",
+        "forsaken_tundra_brick",
+        "magmabrick",
+        "mineral_cave_stone_brick", -- MISSING
+        "mineral_sandstone_brick",
+    },
     mortar = {
+        -- COBBLES
         "coral_desert_cobble", -- MISSING
         "coral_desert_mossy_cobble", -- MISSING
-        "coral_deep_ocean_sandstone_rubble",
-        "coral_white_sandstone_rubble",
         "crystal_cobble",
         "crystal_mossy_cobble",
         "cursed_cobble", -- MISSING
         "cursed_cobble_with_growth", -- MISSING
         "cursed_sandstone_cobble", -- MISSING
+        "forsaken_desert_cobble",
+        "forsaken_desert_cobble_red",
+        "forsaken_tundra_cobble",
+        "magmacobble",
+        "mineral_stone_cobble",
+        -- CUTS
         "cut_coral_bones_block",
         "cut_coral_deep_ocean_sandstone_block",
         "cut_coral_desert_stone",
@@ -96,31 +121,6 @@ local conversions_by_tool = {
         "cut_sulfur_stone",
         "cut_volcanic_rock",
         "cut_volcanic_rock_with_magma",
-        "forsaken_desert_cobble",
-        "forsaken_desert_cobble_red",
-        "forsaken_tundra_cobble",
-        "magmacobble",
-        "mineral_stone_cobble",
-        "quartz_rubble", -- MISSING
-    },
-    pick = { -- BRICK ONLY!!!!
-        "coral_bones_brick",
-        "coral_sandstone_brick",
-        "coral_white_sandstone_brick",
-        "crystal_forest_deep_ocean_sandstone_brick",
-        "crystal_mossy_brick",
-        "crystal_stone_brick",
-        "coral_deep_ocean_sandstone_brick", -- MISSING
-        "coral_desert_stone_brick", -- MISSING
-        "cursed_brick", -- MISSING
-        "cursed_brick_with_growth", -- MISSING
-        "cursed_lands_deep_ocean_sandstone_brick",
-        "cursed_sandstone_brick", -- MISSING
-        "forsaken_desert_brick",
-        "forsaken_desert_brick_red",
-        "forsaken_tundra_brick",
-        "magmabrick",
-        "mineral_cave_stone_brick", -- MISSING
     },
 }
 

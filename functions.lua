@@ -59,7 +59,7 @@ end
 
 function quarry_link.register_block_craft_recipe(block_name)
     block_name = "quarry_link:"..quarry_link.snake_case(block_name)
-    base_stone = string.gsub(block_name, "_block", "")
+    local base_stone = string.gsub(block_name, "_block", "")
     -- minetest.log("action", "[Quarry Link] Using for block craft recipe registration: block_name "..block_name.." and base_stone "..base_stone)
     minetest.register_craft({
         output = block_name.." 9",
@@ -178,7 +178,7 @@ function quarry_link.register_rubble(stone_name, in_mod)
         is_ground_content = false,
         groups = {crumbly = 3, stone = 2, falling_node = 1},
         sounds = default.node_sound_stone_defaults(),
-        on_dig = quarry.mortar_on_dig(in_mod.."_"..base_stone.."_brick", {sticky = 3}),
+        on_dig = quarry.mortar_on_dig(in_mod..":"..base_stone.."_brick", {sticky = 3}),
     })
 end
 
