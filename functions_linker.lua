@@ -19,6 +19,16 @@ function quarry_link.is_base(target)
     return true
 end
 
+function quarry_link.unwork(target)
+    for _, adjective in ipairs(adjectives_worked) do
+        if string.find(target, adjective) ~= nil then
+            return string.gsub(target, "_"..adjective, "")
+        end
+    end
+
+    return target
+end
+
 function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
     for _, target in ipairs(conversions) do
         local name = quarry_link.capitalize_firsts(target)
@@ -56,6 +66,7 @@ function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
         local is_irregular = irregularly_named_pairs[target] ~= nil
         broken_result = is_irregular and irregularly_named_pairs[target] or target.."_"..broken_result
         broken_result = is_block and string.gsub(broken_result, "block_", "") or broken_result
+        broken_result = not is_base and quarry_link.unwork(broken_result) or broken_result
         if not is_rubble_broken_result then
             broken_result = quarry_link.is_registered(broken_result, mod_name) and broken_result or string.gsub(broken_result, "stone_", "")
         end
