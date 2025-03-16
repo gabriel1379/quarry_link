@@ -14,25 +14,37 @@ local resource_nodes_technic = {
 }
 quarry_link.quarrify_resource_nodes(resource_nodes_technic, mod_name)
 
-local stones_to_process = {
+local missing_cobbles = {
     "Granite",
     "Marble",
 }
-local missing_cobbles = stones_to_process
-
 for _,missing_cobble in ipairs(missing_cobbles) do
     quarry_link.register_cobble(missing_cobble)
 end
 
-for _,stone_name in ipairs(stones_to_process) do
-    stone = quarry_link.snake_case(stone_name)
-    quarry_link.register_cut_variant(stone, stone_name, mod_name)
-    -- quarry_link.register_cut_variant(stone_name.." Block", mod_name)
-    quarry_link.set_tools_for_stone(stone_name, mod_name, true, true)
-    -- quarry_link.set_tools_for_stair_and_slab(stone_name, mod_name, true)
-    quarry_link.clear_crafts(stone_name, mod_name)
-    -- quarry_link.register_block_craft_recipe(stone_name)
-end
+local conversions_by_tool = {
+    hammer = { -- NO BRICKS!!!
+        "granite",
+        "marble",
+    },
+    pick = { -- BRICKS ONLY!!!!
+        "granite_bricks",
+        "marble_bricks",
+    },
+    mortar = {
+        "cut_granite",
+        "cut_marble",
+        "granite_cobble",
+        "marble_cobble",
+    },
+}
+local irregularly_named_pairs = {
+    granite_bricks = 'granite_cobble',
+    granite_cobble = 'granite_bricks',
+    marble_bricks = 'marble_cobble',
+    marble_cobble = 'marble_bricks',
+}
+quarry_link.link(mod_name, conversions_by_tool, irregularly_named_pairs)
 
 local crafts_to_replace = {
     lv_compressor = {
