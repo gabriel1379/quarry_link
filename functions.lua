@@ -182,8 +182,13 @@ function quarry_link.clear_crafts(stone_name, in_mod)
         {"stair_outer_"..base_stone, "stairs"},
     }
 
+    local exceptions = {
+        quartz_block = "quartz_block",
+    }
+
     for _, craft_to_clear in ipairs(crafts_to_clear) do
-        if quarry_link.is_registered(craft_to_clear[1], craft_to_clear[2]) then
+        -- minetest.log("action", "[Quarry Link]: Clearing "..craft_to_clear[1].." in "..craft_to_clear[2])
+        if not exceptions[craft_to_clear[1]] and quarry_link.is_registered(craft_to_clear[1], craft_to_clear[2]) then
             minetest.clear_craft({output = craft_to_clear[2]..":"..craft_to_clear[1]})
         end
     end

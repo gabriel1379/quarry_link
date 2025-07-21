@@ -30,6 +30,10 @@ function quarry_link.unwork(target)
 end
 
 function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
+    local exceptions = {
+        marble = "marble",
+    }
+
     for _, target in ipairs(conversions) do
         local name = quarry_link.capitalize_firsts(target)
         local block_suffix = quarry_link.read_block_suffix(target)
@@ -71,6 +75,7 @@ function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
             broken_result = quarry_link.is_registered(broken_result, mod_name) and broken_result or string.gsub(broken_result, "stone_", "")
         end
         local broken_result_in_mod = is_rubble_broken_result and "quarry_link" or mod_name
+        broken_result_in_mod = exceptions[target] ~= nil and "quarry_link" or broken_result_in_mod
         quarry.override_hammer(mod_name..":"..target, "quarry_link:cut_"..target, broken_result_in_mod..":"..broken_result, {cracky = 3})
 
         if (quarry_link.is_registered("stair_"..target, "stairs")) then
@@ -143,6 +148,10 @@ function quarry_link.link_mortar(mod_name, conversions, irregularly_named_pairs)
 end
 
 function quarry_link.link_pick(mod_name, conversions, irregularly_named_pairs)
+    local exceptions = {
+        marble = "marble",
+    }
+
     for _, target in ipairs(conversions) do
         local is_ok = true
         if not quarry_link.is_registered(target, mod_name) then
@@ -153,6 +162,7 @@ function quarry_link.link_pick(mod_name, conversions, irregularly_named_pairs)
         local is_sandstone_or_quartz = not (string.find(target, "sandstone") == nil) or not (string.find(target, "quartz") == nil)
         local result = is_sandstone_or_quartz and "rubble" or "cobble"
         local result_in_mod = result == "rubble" and "quarry_link" or mod_name
+        result_in_mod = exceptions[target] ~= nil and "quarry_link" or result_in_mod
         local is_irregular = irregularly_named_pairs[target] ~= nil
         result = is_irregular and irregularly_named_pairs[target] or string.gsub(target, "brick", result)
 
