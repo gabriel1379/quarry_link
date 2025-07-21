@@ -90,6 +90,25 @@ function quarry_link.set_tools_for_stone(base_stone_name, in_mod, is_own_cobble,
     quarry.override_pick(in_mod..":"..base_stone.."_brick"..plural_s, cobble_mod..":"..cobble_name, {cracky = 2})
 end
 
+function quarry_link.register_cobble_or_rubble_stair_and_slab(base_stone, in_mod)
+    local stone_name = quarry_link.capitalize_firsts(base_stone)
+    local is_rubble = string.find(base_stone, "cobble") ~= nil
+    local crackiness = is_rubble and 3 or 2
+
+    stairs.register_stair_and_slab(
+        base_stone,
+        in_mod..":"..base_stone,
+        {cracky = crackiness},
+        {in_mod.."_"..base_stone..".png"},
+        stone_name.." Stair",
+        stone_name.." Slab",
+        default.node_sound_stone_defaults(),
+        true
+    )
+
+    -- minetest.log("action", "Registered ".."Cut "..stone_name.." Stair and Slab.")
+end
+
 function quarry_link.register_cut_stone_or_block_stair_and_slab(stone_name, in_mod)
     local base_stone = quarry_link.snake_case(stone_name)
     local block_suffix = quarry_link.read_block_suffix(base_stone)
@@ -163,8 +182,13 @@ function quarry_link.clear_crafts(stone_name, in_mod)
         {"stair_outer_"..base_stone, "stairs"},
     }
 
+    local exceptions = {
+        quartz_block = "quartz_block",
+    }
+
     for _, craft_to_clear in ipairs(crafts_to_clear) do
-        if quarry_link.is_registered(craft_to_clear[1], craft_to_clear[2]) then
+        -- minetest.log("action", "[Quarry Link]: Clearing "..craft_to_clear[1].." in "..craft_to_clear[2])
+        if not exceptions[craft_to_clear[1]] and quarry_link.is_registered(craft_to_clear[1], craft_to_clear[2]) then
             minetest.clear_craft({output = craft_to_clear[2]..":"..craft_to_clear[1]})
         end
     end

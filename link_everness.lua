@@ -68,6 +68,7 @@ local conversions_by_tool = {
         "magmabrick",
         "mineral_cave_stone_brick", -- MISSING
         "mineral_sandstone_brick",
+        "mineral_stone_brick",
     },
     mortar = {
         -- COBBLES
