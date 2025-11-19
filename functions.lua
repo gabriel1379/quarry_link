@@ -15,6 +15,7 @@ function quarry_link.is_registered(node, in_mod)
 end
 
 function quarry_link.determine_cobble_name(base_stone, in_mod)
+    -- minetest.log("action", "[Quarry_Link][determine_cobble_name] ".."base_stone, in_mod: "..base_stone..","..in_mod..".")
     base_stone = string.gsub(base_stone, '_stone', '')
     local cobble_name_no_stone = base_stone.."_cobble"
     local cobble_name_stone = base_stone.."_stone_cobble"
@@ -24,7 +25,6 @@ function quarry_link.determine_cobble_name(base_stone, in_mod)
     elseif quarry_link.is_registered(cobble_name_stone, in_mod) then
         cobble_name = cobble_name_stone
     end
-    -- minetest.log("action", "[Quarry_Link] ".."Using name "..cobble_name..".")
 
     return cobble_name
 end
@@ -32,8 +32,7 @@ end
 function quarry_link.register_cobble(cobble_name)
     local base_cobble = quarry_link.snake_case(cobble_name)
     local is_marble = base_cobble == "marble"
-
-    minetest.register_node( "quarry_link:"..base_cobble.."_cobble", {
+    minetest.register_node("quarry_link:"..base_cobble.."_cobble", {
     	description = cobble_name.." Cobble",
     	tiles = { "quarry_link_"..base_cobble.."_cobble.png" },
     	is_ground_content = false,

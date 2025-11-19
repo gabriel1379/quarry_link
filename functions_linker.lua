@@ -31,6 +31,7 @@ end
 
 function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
     local exceptions = {
+        granite = "granite",
         marble = "marble",
     }
 
@@ -76,7 +77,9 @@ function quarry_link.link_hammer(mod_name, conversions, irregularly_named_pairs)
         end
         local broken_result_in_mod = is_rubble_broken_result and "quarry_link" or mod_name
         broken_result_in_mod = exceptions[target] ~= nil and "quarry_link" or broken_result_in_mod
-        quarry.override_hammer(mod_name..":"..target, "quarry_link:cut_"..target, broken_result_in_mod..":"..broken_result, {cracky = 3})
+        -- Cobble or other broken result gets registered here
+        minetest.log("action", "[Quarry Link][link_hammer] target: "..target..", b_r_i_m: "..broken_result_in_mod..", mod_name: "..mod_name)
+        quarry.override_hammer(mod_name..":"..target, "quarry_link:cut_"..target, broken_result_in_mod..":"..broken_result, {cracky = 3, falling_node = 1})
 
         if (quarry_link.is_registered("stair_"..target, "stairs")) then
             quarry_link.register_cut_stone_or_block_stair_and_slab(name, mod_name)
@@ -124,14 +127,22 @@ function quarry_link.link_mortar(mod_name, conversions, irregularly_named_pairs)
         result = is_cobble and string.gsub(target, "cobble", "brick", 1) or result
         result = is_rubble and string.gsub(target, "rubble", "brick", 1) or result
         result = is_irregular and irregularly_named_pairs[target] or result
+        minetest.log("action", "[Quarry Link][link_mortar] mod_name: "..mod_name..", target: "..target..", result: "..result)
 
-        if (not quarry_link.is_registered(target, mod_name)) then
-            -- minetest.log("action", "[Quarry Link] Node "..mod_name..":"..target.." (target) is not registered, unable to override mortar).")
-        elseif (not quarry_link.is_registered(result, mod_name)) then
-            -- minetest.log("action", "[Quarry Link] Node "..mod_name..":"..result.." (result) is not registered, unable to override mortar).")
-        else
-            -- minetest.log("action", "[Quarry Link] Attempting to override mortar for "..mod_name..":"..target.." with "..mod_name..":"..result)
+        if (quarry_link.is_registered(target, mod_name) and quarry_link.is_registered(result, mod_name)) then
             quarry.override_mortar(mod_name..":"..target, mod_name..":"..result, {crumbly = 3, stone = 1, falling_node = 1}, {sticky = 3})
+        end
+
+        if (quarry_link.is_registered(target, 'quarry_link') and quarry_link.is_registered(result, 'quarry_link')) then
+            quarry.override_mortar("quarry_link:"..target, "quarry_link:"..result, {crumbly = 3, stone = 1, falling_node = 1}, {sticky = 3})
+        end
+
+        if (quarry_link.is_registered(target, mod_name) and quarry_link.is_registered(result, 'quarry_link')) then
+            quarry.override_mortar(mod_name..":"..target, "quarry_link:"..result, {crumbly = 3, stone = 1, falling_node = 1}, {sticky = 3})
+        end
+
+        if (quarry_link.is_registered(target, 'quarry_link') and quarry_link.is_registered(result, mod_name)) then
+            quarry.override_mortar("quarry_link:"..target, mod_name..":"..result, {crumbly = 3, stone = 1, falling_node = 1}, {sticky = 3})
         end
 
         if (quarry_link.is_registered("stair_"..target, "stairs")) and (quarry_link.is_registered("stair_"..result, "stairs")) then
@@ -149,7 +160,8 @@ end
 
 function quarry_link.link_pick(mod_name, conversions, irregularly_named_pairs)
     local exceptions = {
-        marble = "marble",
+        granite_bricks = "granite_bricks",
+        marble_bricks = "marble_bricks",
     }
 
     for _, target in ipairs(conversions) do
@@ -182,7 +194,7 @@ function quarry_link.link_pick(mod_name, conversions, irregularly_named_pairs)
 
         if is_ok then
             -- minetest.log("action", "[Quarry Link] Attempting to override pick for "..mod_name..":"..target.." with "..result_in_mod..":"..result)
-            quarry.override_pick(mod_name..":"..target, result_in_mod..":"..result, {cracky = 2})
+            quarry.override_pick(mod_name..":"..target, result_in_mod..":"..result, {cracky = 2, falling_node = 1})
 
             for _, stair in ipairs(stairs) do
                 quarry.override_pick(
